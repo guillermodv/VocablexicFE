@@ -7,7 +7,6 @@ import Head from "next/head";
 
 export default function Home() {
   const { solution } = useFetchWord();
-  console.log("solution -->", solution);
   return (
     <div className={styles.container}>
       <Head>
