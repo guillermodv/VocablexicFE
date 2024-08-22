@@ -4,6 +4,7 @@ import { application } from "@/const";
 import useFetchWord from "@/hooks/useFetchWord";
 import styles from "@/styles/Home.module.css";
 import Head from "next/head";
+import "./index.css";
 
 export default function Home() {
   const { solution } = useFetchWord();
@@ -15,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className={styles.header}>
+      <header className="header">
         <h1>{application.name}</h1>
       </header>
 
