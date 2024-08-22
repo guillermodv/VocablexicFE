@@ -55,7 +55,7 @@ export default function Wordy({ solution }) {
     }
 
     return () => window.removeEventListener("keyup", handleKeyUp);
-  }, [handleKeyUp]);
+  }, [handleKeyUp, isCorrect, turn]);
 
   const handleClick = (key) => {
     handleKeyUp({ key });
