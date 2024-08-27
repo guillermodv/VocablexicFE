@@ -1,13 +1,13 @@
 "use client";
 import Wordy from "@/components/Wordy";
 import { application } from "@/const";
-import useFetchWord from "@/hooks/useFetchWord";
 import styles from "@/styles/Home.module.css";
 import Head from "next/head";
 import "./index.css";
 
 export default function Home() {
-  const { solution } = useFetchWord();
+
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -21,12 +21,8 @@ export default function Home() {
       </header>
 
       <main className={styles.main}>
-        {solution && <Wordy solution={solution} />}
+        <Wordy  />
       </main>
-
-      <footer className={styles.footer}>
-        <p>{application.footerLabel}</p>
-      </footer>
     </div>
   );
 }

@@ -8,7 +8,7 @@ const useWordy = (solution) => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [usedKeys, setUsedKeys] = useState({});
 
-  console.log("usedKeys", usedKeys);
+  console.log('solution', solution)
 
   const formatGuess = () => {
     let solutionArray = [...solution];
@@ -112,7 +112,16 @@ const useWordy = (solution) => {
     }
   };
 
-  return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyUp };
+  const resetGame = () => {
+    setTurn(0);
+    setCurrentGuess("");
+    setGuesses([...Array(6)]);
+    setHistory([]);
+    setIsCorrect(false);
+    setUsedKeys({});
+  };
+
+  return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyUp, resetGame};
 };
 
 export default useWordy;
