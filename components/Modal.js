@@ -8,8 +8,8 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
         </div>
       ) : (
         <div>
-          <h1>{titles.lose}</h1>
-          <p>{titles.loseDescription}</p>
+          <h1>{titles.loose}</h1>
+          <p>{titles.looseDescription}</p>
         </div>
       )}
     </div>
