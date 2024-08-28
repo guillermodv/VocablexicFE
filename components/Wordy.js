@@ -77,6 +77,10 @@ export default function Wordy() {
     handleKeyUp({ key });
   };
 
+  const handleReset = () => {
+    window.location.reload();
+  };
+
   return (
     <>
       <div className="icon-buttons">
@@ -135,6 +139,15 @@ export default function Wordy() {
           }}
         >
           <FaCheck />
+        </button>
+        <button
+          className="action-button"
+          key={"reload"}
+          onClick={() => {
+            handleReset();
+          }}
+        >
+          Reset
         </button>
         <button
           className="action-button"

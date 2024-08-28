@@ -155,6 +155,21 @@
   cursor: pointer;
 }
 
+.action-button-modal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    background-color: #80e095; /* Color verde */
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+  }
+
 .action-button:hover {
   background-color: #218838;
 }
