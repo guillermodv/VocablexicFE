@@ -8,6 +8,7 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
         </div>
       ) : (
         <div>
+          <p className="solution">the solution was: {solution}</p>
           <h1>{titles.loose}</h1>
           <p>{titles.looseDescription}</p>
         </div>

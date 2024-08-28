@@ -1,11 +1,11 @@
+import { lenguaje } from "@/const";
+import useFetchWord from "@/hooks/useFetchWord";
+import useLenguaje from "@/hooks/useLenguaje";
 import useWordy from "@/hooks/useWordy";
 import { useEffect, useState } from "react";
+import { FaBackspace, FaCheck } from "react-icons/fa";
 import Grid from "./Grid";
 import Modal from "./Modal";
-import { FaBackspace, FaCheck } from "react-icons/fa";
-import { lenguaje } from "@/const";
-import useLenguaje from "@/hooks/useLenguaje";
-import useFetchWord from "@/hooks/useFetchWord";
 
 const letters = [
   { key: "a" },
@@ -38,9 +38,16 @@ const letters = [
 
 export default function Wordy() {
   const { setLeng, titles, leng } = useLenguaje();
-  const {solution} = useFetchWord(leng);
-  const { currentGuess, handleKeyUp, guesses, isCorrect, turn, usedKeys, resetGame } =
-    useWordy(solution);
+  const { solution } = useFetchWord(leng);
+  const {
+    currentGuess,
+    handleKeyUp,
+    guesses,
+    isCorrect,
+    turn,
+    usedKeys,
+    resetGame,
+  } = useWordy(solution);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -62,7 +69,7 @@ export default function Wordy() {
   }, [handleKeyUp, isCorrect, turn]);
 
   useEffect(() => {
-    resetGame(); 
+    resetGame();
   }, [leng]);
 
   const handleClick = (key) => {
@@ -91,6 +98,12 @@ export default function Wordy() {
           onClick={() => setLeng(lenguaje.usa)}
         >
           <img src="/usa.png" alt="USA" />
+        </button>
+        <button
+          className={`icon-button ${leng === lenguaje.fr ? "selected" : ""}`}
+          onClick={() => setLeng(lenguaje.fr)}
+        >
+          <img src="/francia.png" alt="Fr" />
         </button>
       </div>
       <Grid currentGuess={currentGuess} guesses={guesses} turn={turn} />
@@ -132,7 +145,12 @@ export default function Wordy() {
         </button>
 
         {showModal && (
-          <Modal isCorrect={isCorrect} turn={turn} solution={solution} titles={titles} />
+          <Modal
+            isCorrect={isCorrect}
+            turn={turn}
+            solution={solution}
+            titles={titles}
+          />
         )}
       </div>
       <footer className="footer">
