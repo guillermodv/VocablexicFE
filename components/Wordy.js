@@ -47,7 +47,8 @@ export default function Wordy() {
     turn,
     usedKeys,
     resetGame,
-  } = useWordy(solution);
+    message,
+  } = useWordy(solution, titles);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -106,6 +107,7 @@ export default function Wordy() {
           <img src="/francia.png" alt="Fr" />
         </button>
       </div>
+      <div className="solution">{message}</div>
       <Grid currentGuess={currentGuess} guesses={guesses} turn={turn} />
       <div className="keypad">
         {letters &&

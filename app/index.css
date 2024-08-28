@@ -195,6 +195,15 @@
   margin-top: 8px;
 }
 
+.solution {
+  color: #d3567b;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
 @keyframes flip {
   0% {
     transform: rotateX(0);

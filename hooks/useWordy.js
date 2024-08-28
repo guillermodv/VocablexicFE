@@ -1,14 +1,15 @@
 import { useState } from "react";
 
-const useWordy = (solution) => {
+const useWordy = (solution, titles) => {
   const [turn, setTurn] = useState(0);
   const [currentGuess, setCurrentGuess] = useState("");
+  const [message, setMessage] = useState("");
   const [guesses, setGuesses] = useState([...Array(6)]);
   const [history, setHistory] = useState([]);
   const [isCorrect, setIsCorrect] = useState(false);
   const [usedKeys, setUsedKeys] = useState({});
 
-  console.log('solution', solution)
+  console.log("solution", solution);
 
   const formatGuess = () => {
     let solutionArray = [...solution];
@@ -73,24 +74,25 @@ const useWordy = (solution) => {
           return;
         }
       });
-      return newKeys; // Retornamos el nuevo estado actualizado
+      return newKeys;
     });
 
     setCurrentGuess("");
   };
 
   const handleKeyUp = ({ key }) => {
+    setMessage("");
     if (key === "Enter") {
       if (turn > 5) {
-        console.log("Usaste todos los intentos");
+        setMessage(titles.noMoreTryes);
         return;
       }
       if (history.includes(currentGuess)) {
-        console.log("Ya probaste esa palabra");
+        setMessage(titles.alreadyTested);
         return;
       }
       if (currentGuess.length !== 5) {
-        console.log("debe tener 5 letras");
+        setMessage(titles.fiveLetters);
         return;
       }
       const formatted = formatGuess();
@@ -121,7 +123,16 @@ const useWordy = (solution) => {
     setUsedKeys({});
   };
 
-  return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyUp, resetGame};
+  return {
+    turn,
+    currentGuess,
+    guesses,
+    isCorrect,
+    usedKeys,
+    handleKeyUp,
+    resetGame,
+    message,
+  };
 };
 
 export default useWordy;
