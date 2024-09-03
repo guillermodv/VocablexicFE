@@ -1,8 +1,8 @@
 export const application = {
-  name: "Vocal Lexic",
-  longName: "Vocal Lexic",
+  name: "Vocab Lexic",
+  longName: "Vocab Lexic",
   description: "A fun Wordle game clone!",
-  footerLabel: "© 2024 Vocal Lexic by OnlineJobs!. All rights reserved.",
+  footerLabel: "© 2024 Vocab Lexic by OnlineJobs!. All rights reserved.",
 };
 
 export const lenguaje = {
@@ -10,11 +10,12 @@ export const lenguaje = {
   cata: "CATA",
   usa: "US",
   fr: "FR",
+  mexico: "MEXICO",
 };
 
 export const labels = {
   cata: {
-    footerLabel: "© 2024 Vocal Lexic per OnlineJobs!",
+    footerLabel: "© 2024 Vocab Lexic per OnlineJobs!",
     win: "Has guanyat!",
     winDescription: "Has trobat la solució",
     loose: "Has perdut!",
@@ -25,7 +26,7 @@ export const labels = {
     fiveLetters: "Ha de tenir 5 lletres.",
   },
   usa: {
-    footerLabel: "© 2024 Vocal Lexic by OnlineJobs!. All rights reserved.",
+    footerLabel: "© 2024 Vocab Lexic by OnlineJobs!. All rights reserved.",
     win: "You Win!",
     winDescription: "You find the solution",
     loose: "You Loose!",
@@ -36,7 +37,7 @@ export const labels = {
     fiveLetters: "It must have 5 letters.",
   },
   spain: {
-    footerLabel: "© 2024 Vocal Lexic de OnlineJobs!",
+    footerLabel: "© 2024 Vocab Lexic de OnlineJobs!",
     win: "Ganaste",
     winDescription: "Encontraste la solucion.",
     loose: "Perdiste!",
@@ -46,8 +47,19 @@ export const labels = {
     alreadyTested: "Ya probaste esa palabra.",
     fiveLetters: "Debe tener 5 letras",
   },
+  mexico: {
+    footerLabel: "© 2024 Vocab Lexic de OnlineJobs, ¡puro sabor mexicano!",
+    win: "¡Ganaste, campeón!",
+    winDescription: "¡Le atinaste a la solución, qué chido!",
+    loose: "¡Perdiste, amigo!",
+    looseDescription: "¡Ánimo, la próxima sí la haces!",
+    input: "Introduce la palabra aquí",
+    noMoreTryes: "Ya no tienes más intentos, ¡buena suerte la próxima!",
+    alreadyTested: "Esa palabra ya la probaste, ¡intenta otra!",
+    fiveLetters: "La palabra debe tener 5 letras, ¡échale ganas!",
+  },
   france: {
-    footerLabel: "© 2024 Vocal Lexic de OnlineJobs!",
+    footerLabel: "© 2024 Vocab Lexic de OnlineJobs!",
     win: "Tu as gagné",
     winDescription: "Tu as trouvé la solution.",
     loose: "Tu as perdu!",

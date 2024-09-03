@@ -92,6 +92,14 @@ export default function Wordy() {
         </button>
         <button
           className={`icon-button ${
+            leng === lenguaje.mexico ? "selected" : ""
+          }`}
+          onClick={() => setLeng(lenguaje.mexico)}
+        >
+          <img src="/mexico.png" alt="Mexico" />
+        </button>
+        <button
+          className={`icon-button ${
             leng === lenguaje.catalonia ? "selected" : ""
           }`}
           onClick={() => setLeng(lenguaje.cata)}
@@ -168,9 +176,9 @@ export default function Wordy() {
           />
         )}
       </div>
-      <footer className="footer">
+      {/* <footer className="footer">
         <p>{titles.footerLabel}</p>
-      </footer>
+      </footer> */}
     </>
   );
 }

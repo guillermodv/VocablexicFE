@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { lenguaje } from "@/const";
 import solutionCata from "../data/solucionscat.json";
 import solutionFr from "../data/solucionsfrance.json";
+import solutionMexico from "../data/solucionsMexico.json";
 import solutionSpain from "../data/solucionspain.json";
 import solutionUsa from "../data/solucionsusa.json";
 
@@ -13,6 +14,7 @@ const useFetchWord = (leng) => {
   useEffect(() => {
     if (leng === lenguaje.cata) setSolutions(solutionCata);
     if (leng === lenguaje.spain) setSolutions(solutionSpain);
+    if (leng === lenguaje.mexico) setSolutions(solutionMexico);
     if (leng === lenguaje.usa) setSolutions(solutionUsa);
     if (leng === lenguaje.fr) setSolutions(solutionFr);
   }, [leng]);

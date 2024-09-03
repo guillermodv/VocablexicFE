@@ -4,8 +4,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Vocal Lexic",
-  description: "Vocal Lexic by OnlineJobs",
+  title: "Vocab Lexic",
+  description: "Vocab Lexic by OnlineJobs",
 };
 
 export default function RootLayout({ children }) {
