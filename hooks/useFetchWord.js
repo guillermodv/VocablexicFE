@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { lenguaje } from "@/const";
 import solutionCata from "../data/solucionscat.json";
 import solutionFr from "../data/solucionsfrance.json";
-import solutionMexico from "../data/solucionsMexico.json";
+import solutionMexico from "../data/solucionsmexico.json";
 import solutionSpain from "../data/solucionspain.json";
 import solutionUsa from "../data/solucionsusa.json";
 
