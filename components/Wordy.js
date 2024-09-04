@@ -119,7 +119,7 @@ export default function Wordy() {
           <img src="/francia.png" alt="Fr" />
         </button>
       </div>
-      <div className="solution">{message}</div>
+      <div className="errormessage">{message}</div>
       <Grid currentGuess={currentGuess} guesses={guesses} turn={turn} />
       <div className="keypad">
         {letters &&

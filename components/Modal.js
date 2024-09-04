@@ -20,27 +20,25 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
         </button>
         {isCorrect ? (
           <>
-            <h1>{titles.win}</h1>
-            <p>{titles.winDescription}</p>
+            <h1 className="solution">{titles.win}</h1>
+            <p className="gamification">{titles.winDescription}</p>
 
-            <p>Share your result:</p>
             <button
               onClick={() => handleCopyToClipboard(turn, solution)}
               className="share-button"
             >
-              <FaShareAlt /> Copy
+              <FaShareAlt /> Share your result
             </button>
           </>
         ) : (
           <>
             <p className="solution">The solution was: {solution}</p>
-            <h1>{titles.loose}</h1>
-            <p>{titles.looseDescription}</p>
+            <h1 className="gamification">{titles.loose}</h1>
+            <p className="gamification">{titles.looseDescription}</p>
           </>
         )}
 
-        <div className="login-suggestion">
-          <p>
+          <p className="gamification">
             Want to save your progress?{" "}
             <a href="/login" className="login-link">
               Log in here
@@ -48,7 +46,6 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
             .
           </p>
         </div>
-      </div>
     </div>
   );
 }
