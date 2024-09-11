@@ -126,6 +126,74 @@
   animation: bounce 0.2s ease-in-out forwards;
 }
 
+.modalhelp-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: modalhelp-fadeIn 0.3s ease-out;
+}
+
+.modalhelp-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.modalhelp-subheader {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.modalhelp-tips {
+  text-align: left;
+  list-style: none;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.modalhelp-tips li {
+  margin-bottom: 10px;
+}
+
+.modalhelp-red {
+  color: red;
+}
+
+.modalhelp-yellow {
+  color: orange;
+}
+
+.modalhelp-blue {
+  color: lightblue;
+}
+
+.modalhelp-close-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modalhelp-close-button:hover {
+  background-color: #45a049;
+}
+
+@keyframes modalhelp-fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
 .keypad {
   max-width: 500px;
   margin: 20px auto;
@@ -199,6 +267,7 @@
 }
 
 
+
 .action-button {
   display: flex;
   justify-content: center;
@@ -206,6 +275,19 @@
   padding: 10px;
   font-size: 1.5rem;
   background-color: #8da4c2;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.action-button-help {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  font-size: 1.5rem;
+  background-color: #8fc78d;
   border: none;
   border-radius: 5px;
   color: white;
