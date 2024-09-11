@@ -2,14 +2,14 @@ import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import { FaShareAlt, FaTimes } from "react-icons/fa";
 
-confetti({
-  particleCount: 200, // Número de partículas de confeti
-  angle: 110, // Ángulo del lanzamiento
-  spread: 190, // Rango de dispersión del confeti
-  origin: { x: 0.5, y: 0.5 }, // Posición de inicio
-  colors: ['#bb0000', '#ffffff'], // Colores del confeti
-  scalar: 1.7 // Tamaño del confeti
-});
+// confetti({
+//   particleCount: 200, // Número de partículas de confeti
+//   angle: 110, // Ángulo del lanzamiento
+//   spread: 190, // Rango de dispersión del confeti
+//   origin: { x: 0.5, y: 0.5 }, // Posición de inicio
+//   colors: ['#bb0000', '#ffffff'], // Colores del confeti
+//   scalar: 1.7 // Tamaño del confeti
+// });
 
 const handleReset = () => {
   window.location.reload();
