@@ -28,6 +28,20 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
     }
   }, [solution]);
 
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        handleReset();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    
+    document.querySelector(".modal-close").focus();
+    
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [handleReset]);
+
   return (
     <div className="modal">
       <div className="modal-content">
@@ -36,7 +50,7 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
         </button>
         {isCorrect ? (
           <>
-            <h1 className="solution">{titles.win}  </h1>
+            <h1 className="modal-title">{titles.win}  </h1>
             <p className="gamification">{titles.winDescription}</p>
             {solution && (
           <>
@@ -46,7 +60,7 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
               onClick={() => handleCopyToClipboard(turn, solution)}
               className="share-button"
             >
-              <FaShareAlt /> Share your result
+              <FaShareAlt /> Share your result!
             </button>
           </>
         )}
