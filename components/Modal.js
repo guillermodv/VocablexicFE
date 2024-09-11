@@ -1,5 +1,15 @@
+import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import { FaShareAlt, FaTimes } from "react-icons/fa";
+
+confetti({
+  particleCount: 150, // Número de partículas de confeti
+  angle: 90, // Ángulo del lanzamiento
+  spread: 180, // Rango de dispersión del confeti
+  origin: { x: 0.5, y: 0.5 }, // Posición de inicio
+  colors: ['#bb0000', '#ffffff'], // Colores del confeti
+  scalar: 1.2 // Tamaño del confeti
+});
 
 const handleReset = () => {
   window.location.reload();
@@ -41,6 +51,16 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
     
     return () => window.removeEventListener('keydown', handleEscape);
   }, [handleReset]);
+
+  useEffect(() => {
+    if (isCorrect) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 } // Lanzar desde el centro
+      });
+    }
+  }, [isCorrect]);
 
   return (
     <div className="modal">

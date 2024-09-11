@@ -1,23 +1,23 @@
 .header {
   width: 100%;
-  background-color: #cce3e4; /* Fondo suave y agradable */
-  color: rgb(26, 23, 23); /* Color de texto oscuro para buen contraste */
+  background-color: #cce3e4; 
+  color: rgb(26, 23, 23);
   text-align: center;
   font-size: 4rem;
   font-family: "Roboto Slab", serif; 
-  letter-spacing: 1px; /* Incremento del espaciado de letras para un efecto más limpio */
+  letter-spacing: 1px; 
   margin-bottom: 10px;
-  padding: 20px 0; /* Añadir padding para mejorar la distribución */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
-  text-transform: uppercase; /* Transformación de texto para dar un toque más fuerte */
-  border-radius: 20px; /* Bordes redondeados para suavizar el diseño */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave en cambios de estilo */
+  padding: 20px 0; 
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+  text-transform: uppercase; 
+  border-radius: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
 .header:hover {
-  background-color: #ace1e4; /* Cambio de color de fondo al pasar el mouse */
-  color: #202020; /* Ligero cambio en el color del texto */
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al pasar el mouse para un efecto dinámico */
+  background-color: #ace1e4; 
+  color: #202020;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); 
 }
 
 .share-container {
@@ -176,8 +176,8 @@
 
 .icon-button {
   background-color: transparent;
-  border: 2px solid transparent; /* Color del contorno */
-  border-radius: 50%; /* Redondea el botón */
+  border: 2px solid transparent; 
+  border-radius: 50%; 
   padding: 10px;
   margin: 5px;
   cursor: pointer;
@@ -185,19 +185,17 @@
 }
 
 .icon-button img {
-  width: 26px; /* Ajusta el tamaño de la imagen */
+  width: 26px; 
   height: 20px;
 }
 
-/* Estilo para el botón seleccionado */
 .icon-button.selected {
-  border-color: #007bff; /* Color del contorno cuando está seleccionado */
-  transform: scale(1.1); /* Efecto de escala cuando está seleccionado */
+  border-color: #007bff;
+  transform: scale(1.1);
 }
 
-/* Puedes añadir otros estilos para el hover si lo deseas */
 .icon-button:hover {
-  border-color: #0056b3; /* Color del contorno en hover */
+  border-color: #0056b3; 
 }
 
 
@@ -249,7 +247,7 @@
 }
 
 .modal {
-  background: rgba(0, 0, 0, 0.7); /* Fondo más oscuro para enfocar el contenido */
+  background: rgba(0, 0, 0, 0.2); 
   position: fixed;
   width: 100%;
   height: 100%;
@@ -268,7 +266,7 @@
   padding: 40px;
   border-radius: 20px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-  animation: modalFadeIn 0.5s ease; /* Animación al aparecer */
+  animation: modalFadeIn 0.5s ease; 
 }
 
 .modal-close {
