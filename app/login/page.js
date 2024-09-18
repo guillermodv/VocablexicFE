@@ -1,6 +1,7 @@
 "use client";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
@@ -12,12 +13,44 @@ const validationSchema = Yup.object({
 
 function LoginPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const initialValues = { username: "", password: "" };
 
-  const onSubmit = (values) => {
-    router.push("/");
-  };
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+        try {
+          const queryParams = new URLSearchParams(values).toString(); // Convierte los valores a parámetros de consulta
+          const response = await fetch(`http://localhost:3001/?${queryParams}`, { 
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error('Error al obtener los datos');
+          }
+      
+          const data = await response.json();
+          console.log('Datos obtenidos:', data);
+          setSuccess(true);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      
+      console.log("salio del fetch");
+      console.log('Usuario autenticado:', data);
+      router.push("/"); // Redirigir después de un inicio de sesión exitoso
+    }
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-200 to-blue-300">
@@ -28,7 +61,7 @@ function LoginPage() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
         >
           {({ errors, touched }) => (
             <Form className="bg-blue-100 shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -92,9 +125,12 @@ function LoginPage() {
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  Iniciar sesión
+                  {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
                 </button>
               </div>
+              
+              {error && <p className="text-red-500 text-xs italic mt-2">{error}</p>}
+              {success && <p className="text-green-500 text-xs italic mt-2">¡Inicio de sesión exitoso!</p>}
 
               <div className="flex items-center justify-between mt-4">
                 <a
