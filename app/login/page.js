@@ -5,10 +5,12 @@ import { useState } from "react";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
-  username: Yup.string().required("El nombre de usuario es obligatorio"),
+  email: Yup.string()
+    .email("The email format is invalid")
+    .required("The email is required"),
   password: Yup.string()
-    .required("La contraseña es obligatoria")
-    .min(8, "La contraseña debe tener al menos 8 caracteres"),
+    .required("The password is required")
+    .min(8, "The password must be at least 8 characters long"),
 });
 
 function LoginPage() {
@@ -17,40 +19,38 @@ function LoginPage() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  const initialValues = { username: "", password: "" };
+  const initialValues = { email: "", password: "" };
 
   const handleSubmit = async (values) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
 
-        try {
-          const queryParams = new URLSearchParams(values).toString(); // Convierte los valores a parámetros de consulta
-          const response = await fetch(`http://localhost:3001/?${queryParams}`, { 
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
+    try {
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
-          if (!response.ok) {
-            throw new Error('Error al obtener los datos');
-          }
-      
-          const data = await response.json();
-          console.log('Datos obtenidos:', data);
-          setSuccess(true);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      
-      console.log("salio del fetch");
-      console.log('Usuario autenticado:', data);
-      router.push("/"); // Redirigir después de un inicio de sesión exitoso
+      if (!response.ok) {
+        const errorData = await response.json(); 
+        const errorMessage = errorData.message || 'Error';
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      console.log('Autenticated!:', data);
+      setSuccess(true);
+      router.push("/"); 
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-200 to-blue-300">
@@ -68,20 +68,20 @@ function LoginPage() {
               <div className="mb-4">
                 <label
                   className="block text-blue-800 text-sm font-bold mb-2"
-                  htmlFor="username"
+                  htmlFor="email"
                 >
-                  Nombre de usuario
+                  Correo electrónico
                 </label>
                 <Field
-                  name="username"
-                  type="text"
-                  placeholder="Nombre de usuario"
+                  name="email"
+                  type="email"
+                  placeholder="email"
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline ${
-                    errors.username && touched.username ? "border-red-500" : ""
+                    errors.email && touched.email ? "border-red-500" : ""
                   }`}
                 />
                 <ErrorMessage
-                  name="username"
+                  name="email"
                   component="p"
                   className="text-red-500 text-xs italic"
                 />
@@ -125,12 +125,12 @@ function LoginPage() {
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+                  {loading ? 'Loading...' : 'Log in'}
                 </button>
               </div>
               
               {error && <p className="text-red-500 text-xs italic mt-2">{error}</p>}
-              {success && <p className="text-green-500 text-xs italic mt-2">¡Inicio de sesión exitoso!</p>}
+              {success && <p className="text-green-500 text-xs italic mt-2">Login successful!</p>}
 
               <div className="flex items-center justify-between mt-4">
                 <a

@@ -1,31 +1,61 @@
 "use client";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import Image from "next/image";
+import { useState } from "react";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
-  username: Yup.string().required("El nombre de usuario es obligatorio"),
+  name: Yup.string().required("The username is required"),
   email: Yup.string()
-    .email("El correo electrónico no es válido")
-    .required("El correo electrónico es obligatorio"),
+    .email("The email is invalid")
+    .required("The email is required"),
   password: Yup.string()
-    .required("La contraseña es obligatoria")
-    .min(8, "La contraseña debe tener al menos 8 caracteres"),
+    .required("The password is required")
+    .min(8, "The password must be at least 8 characters long"),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Las contraseñas deben coincidir")
-    .required("La confirmación de la contraseña es obligatoria"),
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Password confirmation is required"),
 });
 
 function RegisterPage() {
   const initialValues = {
-    username: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
   };
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    try {
+      const response = await fetch('http://localhost:3001/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json(); 
+        const errorMessage = errorData.message || 'Error';
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      console.log('Authenticated:', data);
+      setSuccess(true);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,27 +67,27 @@ function RegisterPage() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
         >
           {({ errors, touched }) => (
             <Form className="bg-blue-100 shadow-md rounded px-8 pt-6 pb-8 mb-4">
               <div className="mb-4">
                 <label
                   className="block text-blue-800 text-sm font-bold mb-2"
-                  htmlFor="username"
+                  htmlFor="name"
                 >
                   Nombre de usuario
                 </label>
                 <Field
-                  name="username"
+                  name="name"
                   type="text"
                   placeholder="Nombre de usuario"
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-blue-800 leading-tight focus:outline-none focus:shadow-outline ${
-                    errors.username && touched.username ? "border-red-500" : ""
+                    errors.name && touched.name ? "border-red-500" : ""
                   }`}
                 />
                 <ErrorMessage
-                  name="username"
+                  name="name"
                   component="p"
                   className="text-red-500 text-xs italic"
                 />
@@ -130,13 +160,14 @@ function RegisterPage() {
                   className="text-red-500 text-xs italic"
                 />
               </div>
-
+              {error && <p className="text-red-500 text-xs italic mt-2">{error}</p>}
+              {success && <p className="text-green-500 text-xs italic mt-2">User registered successfully!</p>}
               <div className="mt-4">
                 <button
                   className="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  Registrarse
+                  {loading ? 'Iniciando sesión...' : 'Registrarse'}
                 </button>
               </div>
 
