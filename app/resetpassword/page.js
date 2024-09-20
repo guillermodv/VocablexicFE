@@ -1,25 +1,25 @@
 "use client";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
-  email: Yup.string()
-    .email("The email format is invalid")
-    .required("The email is required"),
-  password: Yup.string()
-    .required("The password is required")
-    .min(8, "The password must be at least 8 characters long"),
+  token: Yup.string().required("El token es requerido"),
+  newPassword: Yup.string()
+    .required("La contraseña es requerida")
+    .min(8, "La contraseña debe tener al menos 8 caracteres"),
 });
 
-function LoginPage() {
-  const router = useRouter();
+function ResetPasswordPage() {
+  const searchParams = useSearchParams(); 
+  const myParam = searchParams.get("token");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  const initialValues = { email: "", password: "" };
+  const initialValues = { token: myParam, newPassword: "" };
 
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -27,7 +27,7 @@ function LoginPage() {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:3001/login', {
+      const response = await fetch('http://localhost:3001/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,15 +36,14 @@ function LoginPage() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json(); 
+        const errorData = await response.json();
         const errorMessage = errorData.message || 'Error';
         throw new Error(errorMessage);
       }
 
       const data = await response.json();
-      console.log('Autenticated!:', data);
+      console.log('Contraseña restablecida:', data);
       setSuccess(true);
-      router.push("/"); 
     } catch (err) {
       setError(err.message);
     } finally {
@@ -56,7 +55,7 @@ function LoginPage() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-200 to-blue-300">
       <div className="w-full max-w-xs">
         <div className="flex flex-col items-center gap-2">
-          <h1 className="text-2xl font-bold mb-8">Vocab Lexic</h1>
+          <h1 className="text-2xl font-bold mb-8">Restablecer Contraseña</h1>
         </div>
         <Formik
           initialValues={initialValues}
@@ -68,64 +67,45 @@ function LoginPage() {
               <div className="mb-4">
                 <label
                   className="block text-blue-800 text-sm font-bold mb-2"
-                  htmlFor="email"
+                  htmlFor="token"
                 >
-                  Correo electrónico
+                  Token
                 </label>
                 <Field
-                  name="email"
-                  type="email"
-                  placeholder="email"
+                  name="token"
+                  type="text"
+                  placeholder="Ingrese su token"
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline ${
-                    errors.email && touched.email ? "border-red-500" : ""
+                    errors.token && touched.token ? "border-red-500" : ""
                   }`}
                 />
                 <ErrorMessage
-                  name="email"
+                  name="token"
                   component="p"
                   className="text-red-500 text-xs italic"
                 />
               </div>
 
-              <div className="mb-6">
+              <div className="mb-4">
                 <label
                   className="block text-blue-800 text-sm font-bold mb-2"
-                  htmlFor="password"
+                  htmlFor="newPassword"
                 >
-                  Contraseña
+                  Nueva Contraseña
                 </label>
                 <Field
-                  name="password"
-                  type="password"
-                  placeholder="******************"
-                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-blue-800 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
-                    errors.password && touched.password ? "border-red-500" : ""
+                  name="newPassword"
+                  type="newPassword"
+                  placeholder="Ingrese nueva contraseña"
+                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.newPassword && touched.newPassword ? "border-red-500" : ""
                   }`}
                 />
-                        <div className="flex items-center justify-between mt-4">
-                <a
-                  className="inline-block align-baseline font-bold text-sm text-blue-400 hover:text-blue-700"
-                  href="recovery"
-                >
-                  No recuerdas la password?
-                </a>
-              </div>
                 <ErrorMessage
-                  name="password"
+                  name="newPassword"
                   component="p"
                   className="text-red-500 text-xs italic"
                 />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <label className="inline-flex items-center">
-                  <Field
-                    type="checkbox"
-                    name="rememberMe"
-                    className="form-checkbox text-blue-600 h-4 w-4"
-                  />
-                  <span className="ml-2 text-blue-800 text-sm">Recordarme</span>
-                </label>
               </div>
 
               <div className="mt-4">
@@ -133,19 +113,19 @@ function LoginPage() {
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  {loading ? 'Loading...' : 'Log in'}
+                  {loading ? 'Restableciendo...' : 'Restablecer Contraseña'}
                 </button>
               </div>
-              
+
               {error && <p className="text-red-500 text-xs italic mt-2">{error}</p>}
-              {success && <p className="text-green-500 text-xs italic mt-2">Login successful!</p>}
+              {success && <p className="text-green-500 text-xs italic mt-2">¡Contraseña restablecida con éxito!</p>}
 
               <div className="flex items-center justify-between mt-4">
                 <a
                   className="inline-block align-baseline font-bold text-sm text-blue-400 hover:text-blue-700"
-                  href="register"
+                  href="login"
                 >
-                  ¿No tienes cuenta? Regístrate
+                  Inicia sesión
                 </a>
               </div>
             </Form>
@@ -156,4 +136,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default ResetPasswordPage;
