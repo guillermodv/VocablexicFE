@@ -34,6 +34,23 @@ export default function Wordy() {
   const [showModal, setShowModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
 
+  const handleLogout = () => {
+    localStorage.removeItem('userWordle');
+    setUserSession(null);
+  };
+
+
+  const [userSession, setUserSession] = useState(null);
+
+  useEffect(() => {
+    const userDataSaved = localStorage.getItem('userWordle');
+    if (userDataSaved) {
+      setUserSession(JSON.parse(userDataSaved));
+    }
+  }, [userSession]);
+
+  console.log('userSession- -->', userSession);
+
   useEffect(() => {
     window.addEventListener("keyup", handleKeyUp);
     if (isCorrect) {
@@ -67,6 +84,7 @@ export default function Wordy() {
 
   return (
     <>
+      { userSession && <p className="gamification">Welcome, {userSession?.name}</p>}
       <div className="icon-buttons">
         <button className={`icon-button ${leng === lenguaje.spain ? "selected" : ""}`} onClick={() => setLeng(lenguaje.spain)}>
           <img src="/spain.png" alt="España" />
@@ -96,6 +114,18 @@ export default function Wordy() {
           );
         })}
       </div>
+      {userSession && <p className="loginText">
+        <a href="#" className="login-link" onClick={handleLogout}>
+          Log Out!
+        </a>
+      </p>}
+      {!userSession && <p className="loginText">
+        Want to save your progress?{" "}
+        <a href="/login" className="login-link">
+          Log in here
+        </a>
+        .
+      </p>}
       <div className="keypadFooter">
         <button className="action-button" key={"enter"} onClick={() => handleClick("Enter")}>
           <FaCheck />

@@ -4,6 +4,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as Yup from "yup";
 
+
+
+const saveDataToLocalstorage = (userSession) => {
+  localStorage.setItem('userWordle', JSON.stringify(userSession));
+};
+
+
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("The email format is invalid")
@@ -44,6 +51,7 @@ function LoginPage() {
       const data = await response.json();
       console.log('Autenticated!:', data);
       setSuccess(true);
+      saveDataToLocalstorage(data.user); 
       router.push("/"); 
     } catch (err) {
       setError(err.message);
@@ -146,6 +154,11 @@ function LoginPage() {
                   href="register"
                 >
                   ¿No tienes cuenta? Regístrate
+                </a>
+              </div>
+              <div className="flex items-center justify-between mt-4">
+                <a className="inline-block align-baseline text-sm" href="/">
+                  Jugar sin cuenta!
                 </a>
               </div>
             </Form>
