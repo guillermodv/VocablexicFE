@@ -386,6 +386,15 @@
   text-align: center;
 }
 
+.loginText {
+  color: #4b4647;
+  font-weight: bold;
+  font-size: 0.9em;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 .modal-content {
   position: relative; /* Asegura que el botón de cerrar se posicione relativo al modal-content */
   max-width: 480px;
