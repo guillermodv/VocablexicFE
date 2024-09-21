@@ -26,8 +26,10 @@ function ResetPasswordPage() {
     setError(null);
     setSuccess(false);
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001';
+
     try {
-      const response = await fetch('http://localhost:3001/reset-password', {
+      const response = await fetch(`${apiUrl}/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

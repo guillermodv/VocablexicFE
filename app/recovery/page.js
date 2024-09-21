@@ -1,5 +1,4 @@
 "use client";
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as Yup from "yup";
@@ -17,6 +16,7 @@ function RecoveryPasswordPage() {
   const [success, setSuccess] = useState(false);
 
   const initialValues = { email: "" };
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001';
 
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -24,7 +24,7 @@ function RecoveryPasswordPage() {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:3001/request-password-reset', {
+      const response = await fetch(`${apiUrl}/request-password-reset`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
