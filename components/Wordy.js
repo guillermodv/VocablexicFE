@@ -47,7 +47,7 @@ export default function Wordy() {
     if (userDataSaved) {
       setUserSession(JSON.parse(userDataSaved));
     }
-  }, [userSession]);
+  }, []);
 
   console.log('userSession- -->', userSession);
 

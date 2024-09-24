@@ -67,6 +67,29 @@
   margin-right: 8px;
 }
 
+.share-button-point {
+  background-color: #7e5b71;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 18px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.share-button-point:hover {
+  background-color: #a06245;
+}
+
+.share-button-point svg {
+  margin-right: 8px;
+}
+
 .row {
   text-align: center;
   display: flex;

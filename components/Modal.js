@@ -20,9 +20,44 @@ const fetchMeme = async (word) => {
   return "https://www.latercera.com/resizer/SiNfPY7FHBb1-8UM0hCLXGO8wCI=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/copesa/7FFVS6CFZNBA7PZCTJILH7MJSA.jpeg"
 };
 
+
 export default function Modal({ isCorrect, turn, solution, titles }) {
   const [memeUrl, setMemeUrl] = useState(null);
   const [userSession, setUserSession] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001';
+
+  const handleSubmitPoint = async (id, measurement) => {
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    try {
+      const response = await fetch(`${apiUrl}/core/${id}/${measurement}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json(); 
+        const errorMessage = errorData.message || 'Error';
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      console.log('Submit!:', data);
+      setSuccess(true);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const userDataSaved = localStorage.getItem('userWordle');
@@ -45,7 +80,6 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
     };
 
     window.addEventListener('keydown', handleEscape);
-    
     document.querySelector(".modal-close").focus();
     
     return () => window.removeEventListener('keydown', handleEscape);
@@ -79,8 +113,14 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
               onClick={() => handleCopyToClipboard(turn, solution)}
               className="share-button"
             >
-              <FaShareAlt /> Share your result!
+              <FaShareAlt /> Copy your result to share!
             </button>
+            {userSession && <button
+              onClick={() => handleSubmitPoint(userSession.id, turn)}
+              className="share-button-point"
+            >
+              {loading ? 'Loading...' : 'Save your progress'}
+            </button>}
           </>
         )}
           </>
@@ -91,7 +131,9 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
             <p className="gamification">{titles.looseDescription}</p>
           </>
         )}
-        
+
+        {error && <p className="text-red-500 text-xs italic mt-2">{error}</p>}
+        {success && <p className="text-green-500 text-xs italic mt-2">Share successful!</p>}
 
         {!userSession && <p className="gamification">
           Want to save your progress?{" "}
