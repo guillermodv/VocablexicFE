@@ -8,7 +8,7 @@ const TopUsers = () => {
   const getTopUsers = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:3001/cores');
+      const response = await fetch('http://127.0.0.1:3001/top');
       const data = await response.json();
       setUsers(data);
     } catch (error) {
@@ -33,7 +33,7 @@ const TopUsers = () => {
           {users?.map((user, index) => (
             <div key={index} className="bg-white rounded-full shadow-md p-6 text-center">
               <h2 className="text-2xl font-semibold mb-2 text-black">Rank {index + 1}</h2>
-              <p className="text-gray-700 mb-2">User: {user.id}</p>
+              <p className="text-gray-700 mb-2">User: {user.user.email}</p>
               <p className="text-gray-500">Score: {user.measurement}</p>
             </div>
           ))}
