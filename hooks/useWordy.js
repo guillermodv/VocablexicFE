@@ -9,8 +9,10 @@ const useWordy = (solution, titles) => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [usedKeys, setUsedKeys] = useState({});
 
-  console.log("solution", solution);
-
+  if (solution) {
+    console.log("solution", solution);
+  }
+  
   const formatGuess = () => {
     let solutionArray = [...solution];
     let formattedGuess = [...currentGuess].map((letter) => {

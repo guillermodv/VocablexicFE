@@ -2,8 +2,10 @@ import { lenguaje } from "@/const";
 import useFetchWord from "@/hooks/useFetchWord";
 import useLenguaje from "@/hooks/useLenguaje";
 import useWordy from "@/hooks/useWordy";
+import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { FaBackspace, FaCheck } from "react-icons/fa";
+
 import Grid from "./Grid";
 import Modal from "./Modal";
 import ModalHelp from "./ModalHelp";
@@ -39,7 +41,6 @@ export default function Wordy() {
     setUserSession(null);
   };
 
-
   const [userSession, setUserSession] = useState(null);
 
   useEffect(() => {
@@ -49,7 +50,9 @@ export default function Wordy() {
     }
   }, []);
 
-  console.log('userSession- -->', userSession);
+  if (userSession) {  
+    console.log('userSession- -->', userSession);
+  }
 
   useEffect(() => {
     window.addEventListener("keyup", handleKeyUp);
@@ -119,6 +122,9 @@ export default function Wordy() {
           Log Out!
         </a>
       </p>}
+      <Link href="/topusers" className="mt-8 text-blue-500 underline">
+        Top users!
+      </Link>
       {!userSession && <p className="loginText">
         Want to save your progress?{" "}
         <a href="/login" className="login-link">

@@ -115,7 +115,7 @@ export default function Modal({ isCorrect, turn, solution, titles }) {
             >
               <FaShareAlt /> Copy your result to share!
             </button>
-            {userSession && <button
+            {userSession && !success && <button
               onClick={() => handleSubmitPoint(userSession.id, turn)}
               className="share-button-point"
             >
