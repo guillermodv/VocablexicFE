@@ -1,31 +1,35 @@
 "use client";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
-  email: Yup.string()
-    .email("El formato del correo es inválido")
-    .required("El correo electrónico es requerido"),
+  token: Yup.string().required("El token es requerido"),
+  newPassword: Yup.string()
+    .required("La contraseña es requerida")
+    .min(8, "La contraseña debe tener al menos 8 caracteres"),
 });
 
-function RecoveryPasswordPage() {
-  const router = useRouter();
+function ResetPasswordPage() {
+  const searchParams = useSearchParams(); 
+  const myParam = searchParams.get("token");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  const initialValues = { email: "" };
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001';
+  const initialValues = { token: myParam, newPassword: "" };
 
   const handleSubmit = async (values) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001';
+
     try {
-      const response = await fetch(`${apiUrl}/request-password-reset`, {
+      const response = await fetch(`${apiUrl}/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,13 +38,13 @@ function RecoveryPasswordPage() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json(); 
+        const errorData = await response.json();
         const errorMessage = errorData.message || 'Error';
         throw new Error(errorMessage);
       }
 
       const data = await response.json();
-      console.log('Correo enviado para recuperación:', data);
+      console.log('Contraseña restablecida:', data);
       setSuccess(true);
     } catch (err) {
       setError(err.message);
@@ -53,7 +57,7 @@ function RecoveryPasswordPage() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-200 to-blue-300">
       <div className="w-full max-w-xs">
         <div className="flex flex-col items-center gap-2">
-          <h1 className="text-2xl font-bold mb-8">Recuperar Contraseña</h1>
+          <h1 className="text-2xl font-bold mb-8">Restablecer Contraseña</h1>
         </div>
         <Formik
           initialValues={initialValues}
@@ -65,20 +69,42 @@ function RecoveryPasswordPage() {
               <div className="mb-4">
                 <label
                   className="block text-blue-800 text-sm font-bold mb-2"
-                  htmlFor="email"
+                  htmlFor="token"
                 >
-                  Email
+                  Token
                 </label>
                 <Field
-                  name="email"
-                  type="email"
-                  placeholder="email"
+                  name="token"
+                  type="text"
+                  placeholder="Ingrese su token"
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline ${
-                    errors.email && touched.email ? "border-red-500" : ""
+                    errors.token && touched.token ? "border-red-500" : ""
                   }`}
                 />
                 <ErrorMessage
-                  name="email"
+                  name="token"
+                  component="p"
+                  className="text-red-500 text-xs italic"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label
+                  className="block text-blue-800 text-sm font-bold mb-2"
+                  htmlFor="newPassword"
+                >
+                  Nueva Contraseña
+                </label>
+                <Field
+                  name="newPassword"
+                  type="newPassword"
+                  placeholder="Ingrese nueva contraseña"
+                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.newPassword && touched.newPassword ? "border-red-500" : ""
+                  }`}
+                />
+                <ErrorMessage
+                  name="newPassword"
                   component="p"
                   className="text-red-500 text-xs italic"
                 />
@@ -89,12 +115,12 @@ function RecoveryPasswordPage() {
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  {loading ? 'Enviando...' : 'Recuperar Contraseña'}
+                  {loading ? 'Restableciendo...' : 'Restablecer Contraseña'}
                 </button>
               </div>
 
               {error && <p className="text-red-500 text-xs italic mt-2">{error}</p>}
-              {success && <p className="text-green-500 text-xs italic mt-2">¡Correo enviado para recuperación!</p>}
+              {success && <p className="text-green-500 text-xs italic mt-2">¡Contraseña restablecida con éxito!</p>}
 
               <div className="flex items-center justify-between mt-4">
                 <a
@@ -112,4 +138,4 @@ function RecoveryPasswordPage() {
   );
 }
 
-export default RecoveryPasswordPage;
+export default ResetPasswordPage;
