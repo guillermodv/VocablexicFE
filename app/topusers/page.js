@@ -10,7 +10,10 @@ const TopUsers = () => {
     try {
       const response = await fetch('http://127.0.0.1:3001/top');
       const data = await response.json();
-      setUsers(data);
+      if (data) {
+        var topValues = data.sort((a,b) => b.measurement-a.measurement).slice(0,9);
+      }
+      setUsers(topValues);
     } catch (error) {
       console.error(error);
     } finally {
